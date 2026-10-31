@@ -334,7 +334,7 @@
 <div id="game">
   <div class="title">SonicSlots</div>
 
-  <!-- Sonic vs. Eggman Race Bar -->
+  <!-- Sonic vs. Eggman Race Bar (Updated to use Sonic 🦔) -->
   <div class="race-box">
     <div class="race-header">
       <span class="sonic-label">🦔 SONIC (<span id="sonicCount">0</span>/7)</span>
@@ -342,13 +342,13 @@
     </div>
     <div class="race-track">
       <div class="track-side">
-        <div class="race-slot" id="s0">💎</div>
-        <div class="race-slot" id="s1">💎</div>
-        <div class="race-slot" id="s2">💎</div>
-        <div class="race-slot" id="s3">💎</div>
-        <div class="race-slot" id="s4">💎</div>
-        <div class="race-slot" id="s5">💎</div>
-        <div class="race-slot" id="s6">💎</div>
+        <div class="race-slot" id="s0">🦔</div>
+        <div class="race-slot" id="s1">🦔</div>
+        <div class="race-slot" id="s2">🦔</div>
+        <div class="race-slot" id="s3">🦔</div>
+        <div class="race-slot" id="s4">🦔</div>
+        <div class="race-slot" id="s5">🦔</div>
+        <div class="race-slot" id="s6">🦔</div>
       </div>
       <div class="vs-divider">VS</div>
       <div class="track-side eggman-side">
@@ -512,7 +512,7 @@ if (credits === null || isNaN(parseInt(credits)) || parseInt(credits) < 10) {
   credits = parseInt(credits);
 }
 
-let emeraldsCollected = localStorage.getItem('sonic_emeralds') ? parseInt(localStorage.getItem('sonic_emeralds')) : 0;
+let sonicRaceCollected = localStorage.getItem('sonic_race_collected') ? parseInt(localStorage.getItem('sonic_race_collected')) : 0;
 let eggmenCollected = localStorage.getItem('sonic_eggmen') ? parseInt(localStorage.getItem('sonic_eggmen')) : 0;
 
 let bet = 10;
@@ -539,10 +539,8 @@ const scratchCover = document.getElementById('scratchCover');
 const scratchPrize = document.getElementById('scratchPrize');
 const claimBtn = document.getElementById('claimBtn');
 
-// Initialize balance display element immediately
 creditsEl.textContent = credits;
 
-// Clean Starting State: Randomize reels on load so player isn't forced to nudge rings right away
 function randomizeStartingReels() {
   reels = [0,1,2,3,4].map(() => Math.floor(Math.random() * symbols.length));
   reels.forEach((rIdx, i) => {
@@ -553,19 +551,19 @@ randomizeStartingReels();
 
 function saveState() {
   localStorage.setItem('sonic_credits', credits);
-  localStorage.setItem('sonic_emeralds', emeraldsCollected);
+  localStorage.setItem('sonic_race_collected', sonicRaceCollected);
   localStorage.setItem('sonic_eggmen', eggmenCollected);
 }
 
 function updateRaceDisplay() {
-  document.getElementById('sonicCount').textContent = emeraldsCollected;
+  document.getElementById('sonicCount').textContent = sonicRaceCollected;
   document.getElementById('eggmanCount').textContent = eggmenCollected;
 
   for (let i = 0; i < 7; i++) {
     const sEl = document.getElementById('s' + i);
     const eEl = document.getElementById('e' + i);
 
-    if (i < emeraldsCollected) sEl.classList.add('filled-sonic');
+    if (i < sonicRaceCollected) sEl.classList.add('filled-sonic');
     else sEl.classList.remove('filled-sonic');
 
     if (i < eggmenCollected) eEl.classList.add('filled-eggman');
@@ -671,11 +669,11 @@ function finalizeSpin() {
     btn.textContent = 'HOLD';
   });
 
-  // Track Emeralds vs Eggman
+  // Track Sonic (🦔) vs Eggman (🤖) for the Race
   reels.forEach(rIdx => {
-    if (symbols[rIdx] === '💎') {
-      if (emeraldsCollected < 7) {
-        emeraldsCollected++;
+    if (symbols[rIdx] === '🦔') {
+      if (sonicRaceCollected < 7) {
+        sonicRaceCollected++;
         playSound('emerald');
       }
     } else if (symbols[rIdx] === '🤖') {
@@ -688,8 +686,8 @@ function finalizeSpin() {
   updateRaceDisplay();
   saveState();
 
-  // Check Winners of the Race
-  if (emeraldsCollected >= 7) {
+  // Check Winners of the Race (Both set to 1000 rings reward / penalty)
+  if (sonicRaceCollected >= 7) {
     triggerSuperJackpot();
     return;
   } else if (eggmenCollected >= 7) {
@@ -715,10 +713,9 @@ function finalizeSpin() {
     return;
   }
 
-  // Automatically check wins right after spin (No mandatory nudges to get paid!)
   if (!inBonus) {
     checkWin();
-    nudgesLeft = 1; // Give 1 tactical nudge optionally
+    nudgesLeft = 1;
     updateNudgeState();
 
     if (Math.random() < 0.30) {
@@ -738,12 +735,12 @@ function finalizeSpin() {
 }
 
 function triggerSuperJackpot() {
-  const jackpotWin = 1200 * (bet / 10);
+  const jackpotWin = 1000 * (bet / 10);
   credits += jackpotWin;
   creditsEl.textContent = credits;
   winEl.textContent = jackpotWin;
   msgEl.textContent = '🌟 SONIC WON THE RACE! + ' + jackpotWin + ' Rings! 🌟';
-  emeraldsCollected = 0;
+  sonicRaceCollected = 0;
   eggmenCollected = 0;
   updateRaceDisplay();
   saveState();
@@ -756,11 +753,11 @@ function triggerSuperJackpot() {
 }
 
 function triggerEggmanTrap() {
-  const penalty = Math.min(500 * (bet / 10), credits);
+  const penalty = Math.min(1000 * (bet / 10), credits);
   credits -= penalty;
   creditsEl.textContent = credits;
   msgEl.textContent = '💥 EGGMAN WON THE RACE! -' + penalty + ' Rings Penalty!';
-  emeraldsCollected = 0;
+  sonicRaceCollected = 0;
   eggmenCollected = 0;
   updateRaceDisplay();
   saveState();
@@ -896,7 +893,6 @@ function checkWin() {
   let win = 0;
   let messages = [];
 
-  // Softened Eggman Penalty per symbol
   const eggCount = counts['🤖'] || 0;
   if (eggCount > 0) {
     let loss = (eggmanPenalty[eggCount] || 0) * (bet / 10);
