@@ -24,7 +24,6 @@
     border: 2px solid #00b4ff;
     box-shadow: 0 0 30px rgba(0,180,255,0.3);
     padding: 16px 14px 24px;
-    position: relative;
   }
 
   .title {
@@ -34,14 +33,12 @@
     background: linear-gradient(90deg, #00e5ff, #69f0ae);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
-    text-shadow: 0 2px 10px rgba(0,229,255,0.3);
   }
 
-  /* Sonic vs. Eggman Race Tracker */
   .race-box {
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.55);
     border-radius: 14px;
     padding: 8px 10px;
     margin-bottom: 12px;
@@ -56,7 +53,6 @@
   }
   .sonic-label { color: #00e5ff; }
   .eggman-label { color: #ff1744; }
-  
   .race-track {
     display: flex;
     justify-content: space-between;
@@ -67,22 +63,19 @@
     gap: 3px;
     flex: 1;
   }
-  .track-side.eggman-side {
-    justify-content: flex-end;
-  }
-  
+  .track-side.eggman-side { justify-content: flex-end; }
   .race-slot {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    opacity: 0.2;
-    transition: all 0.3s ease;
+    opacity: 0.25;
+    transition: all 0.3s;
   }
   .race-slot.filled-sonic {
     opacity: 1;
@@ -102,7 +95,6 @@
     color: #ffdd55;
     display: flex;
     align-items: center;
-    padding: 0 2px;
   }
 
   .balance-bar {
@@ -145,15 +137,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    position: relative;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
   }
   .symbol {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 42px;
     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.7));
   }
@@ -205,7 +191,6 @@
                 0 8px 24px rgba(0,200,83,0.4),
                 inset 0 -6px 12px rgba(0,0,0,0.25);
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    transition: transform 0.1s;
   }
   #spinBtn:active { transform: scale(0.93); }
 
@@ -242,11 +227,11 @@
     padding: 10px 12px;
     font-size: 10px;
     color: #9ec5e8;
-    line-height: 1.4;
+    line-height: 1.45;
   }
   .paytable strong { color: #00e5ff; }
 
-  /* Scratch Card Overlay */
+  /* Scratch Overlay */
   #scratchOverlay {
     display: none;
     position: fixed;
@@ -273,7 +258,6 @@
     border-color: #ff1744;
     box-shadow: 0 0 25px rgba(255,23,68,0.5);
   }
-  
   .scratch-prize {
     position: absolute;
     inset: 0;
@@ -303,7 +287,6 @@
     font-size: 18px;
     font-weight: 700;
     color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   }
   #scratchCover.penalty-cover {
     background: repeating-linear-gradient(45deg, #d32f2f, #d32f2f 10px, #b71c1c 10px, #b71c1c 20px);
@@ -326,7 +309,7 @@
   }
   .scratch-btn.penalty-btn {
     background: linear-gradient(180deg, #ff1744, #d50000);
-    color: #ffffff;
+    color: white;
   }
 </style>
 </head>
@@ -334,7 +317,6 @@
 <div id="game">
   <div class="title">SonicSlots</div>
 
-  <!-- Sonic vs. Eggman Race Bar (Updated to use Sonic 🦔) -->
   <div class="race-box">
     <div class="race-header">
       <span class="sonic-label">🦔 SONIC (<span id="sonicCount">0</span>/7)</span>
@@ -416,13 +398,12 @@
     🦔 Sonic = 800 &nbsp;|&nbsp; 💎 Emerald = 400<br>
     🦊 Tails / 🥊 Knuckles / 🌸 Amy = 200<br>
     💍 Ring = 120 &nbsp;|&nbsp; 🌭 Chili Dog = 60<br>
-    🤖 Eggman: 1=−30 2=−60 3=−100 4=−200 5=−500<br>
-    🤖 Reel 1 = Eggman Scratch Trap &nbsp;|&nbsp; ⭐ Reel 4 = Bonus Scratch<br>
-    <strong>⭐ middle = Free Spins</strong>
+    🤖 Eggman: 1=−40 &nbsp;2=−80 &nbsp;3=−150 &nbsp;4=−300 &nbsp;5=−800<br>
+    ⭐ Middle = Free Spins &nbsp;|&nbsp; ⭐ Reel 4 = Bonus Scratch<br>
+    🤖 Reel 1 = Eggman Trap
   </div>
 </div>
 
-<!-- Scratch Card Overlay -->
 <div id="scratchOverlay">
   <div class="scratch-title" id="scratchTitle">✨ SCRATCH CARD ✨</div>
   <div class="scratch-card" id="scratchCard">
@@ -438,21 +419,19 @@ if (window.Telegram?.WebApp) {
   Telegram.WebApp.expand();
 }
 
-// Web Audio API Synthesizer
 let audioCtx = null;
 function initAudio() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
-
 function playSound(type) {
   try {
     initAudio();
     if (!audioCtx) return;
-    let osc = audioCtx.createOscillator();
-    let gain = audioCtx.createGain();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    let now = audioCtx.currentTime;
+    const now = audioCtx.currentTime;
 
     if (type === 'spin') {
       osc.type = 'triangle';
@@ -460,35 +439,24 @@ function playSound(type) {
       osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
       gain.gain.setValueAtTime(0.1, now);
       gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
-      osc.start(now);
-      osc.stop(now + 0.08);
+      osc.start(now); osc.stop(now + 0.08);
     } else if (type === 'win') {
       osc.type = 'square';
-      osc.frequency.setValueAtTime(523.25, now);
-      osc.frequency.setValueAtTime(659.25, now + 0.1);
-      osc.frequency.setValueAtTime(783.99, now + 0.2);
+      osc.frequency.setValueAtTime(523, now);
+      osc.frequency.setValueAtTime(659, now + 0.1);
+      osc.frequency.setValueAtTime(784, now + 0.2);
       gain.gain.setValueAtTime(0.12, now);
       gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
-      osc.start(now);
-      osc.stop(now + 0.35);
-    } else if (type === 'emerald') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, now);
-      osc.frequency.exponentialRampToValueAtTime(1400, now + 0.2);
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
-      osc.start(now);
-      osc.stop(now + 0.2);
+      osc.start(now); osc.stop(now + 0.35);
     } else if (type === 'eggman') {
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(120, now);
       osc.frequency.linearRampToValueAtTime(60, now + 0.3);
-      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.setValueAtTime(0.18, now);
       gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
-      osc.start(now);
-      osc.stop(now + 0.3);
+      osc.start(now); osc.stop(now + 0.3);
     }
-  } catch(e){}
+  } catch(e) {}
 }
 
 const symbols = ['🦔','🦊','🥊','🌸','💍','💎','🤖','🌭','⭐'];
@@ -496,31 +464,22 @@ const values = {
   '🦔': 800, '💎': 400, '🦊': 200, '🥊': 200,
   '🌸': 200, '💍': 120, '🌭': 60, '🤖': 0, '⭐': 0
 };
-const eggmanPenalty = {1:30, 2:60, 3:100, 4:200, 5:500};
+const eggmanPenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
 
 let reels = [];
 let held = [false,false,false,false,false];
 let holdAvailable = false;
 let nudgesLeft = 0;
-
-// Safe credit loader with automatic fallback if corrupted/zero
-let credits = localStorage.getItem('sonic_credits');
-if (credits === null || isNaN(parseInt(credits)) || parseInt(credits) < 10) {
-  credits = 1000;
-  localStorage.setItem('sonic_credits', credits);
-} else {
-  credits = parseInt(credits);
-}
-
-let sonicRaceCollected = localStorage.getItem('sonic_race_collected') ? parseInt(localStorage.getItem('sonic_race_collected')) : 0;
-let eggmenCollected = localStorage.getItem('sonic_eggmen') ? parseInt(localStorage.getItem('sonic_eggmen')) : 0;
-
+let credits = parseInt(localStorage.getItem('sonic_credits')) || 1000;
+if (credits < 50) credits = 1000;
+let sonicRace = parseInt(localStorage.getItem('sonic_race')) || 0;
+let eggmanRace = parseInt(localStorage.getItem('sonic_eggman')) || 0;
 let bet = 10;
 let isSpinning = false;
 let inBonus = false;
 let freeSpinsLeft = 0;
 let bonusMultiplier = 1;
-let pendingScratchMult = 1;
+let pendingMult = 1;
 let scratchType = 'bonus';
 
 const reelEls = [0,1,2,3,4].map(i => document.getElementById('r'+i));
@@ -531,8 +490,7 @@ const winEl = document.getElementById('winAmount');
 const msgEl = document.getElementById('message');
 const betEl = document.getElementById('betDisplay');
 const spinBtn = document.getElementById('spinBtn');
-
-const scratchOverlay = document.getElementById('scratchOverlay');
+const overlay = document.getElementById('scratchOverlay');
 const scratchTitle = document.getElementById('scratchTitle');
 const scratchCard = document.getElementById('scratchCard');
 const scratchCover = document.getElementById('scratchCover');
@@ -541,36 +499,27 @@ const claimBtn = document.getElementById('claimBtn');
 
 creditsEl.textContent = credits;
 
-function randomizeStartingReels() {
-  reels = [0,1,2,3,4].map(() => Math.floor(Math.random() * symbols.length));
-  reels.forEach((rIdx, i) => {
-    reelEls[i].textContent = symbols[rIdx];
-  });
-}
-randomizeStartingReels();
-
-function saveState() {
+function save() {
   localStorage.setItem('sonic_credits', credits);
-  localStorage.setItem('sonic_race_collected', sonicRaceCollected);
-  localStorage.setItem('sonic_eggmen', eggmenCollected);
+  localStorage.setItem('sonic_race', sonicRace);
+  localStorage.setItem('sonic_eggman', eggmanRace);
 }
 
-function updateRaceDisplay() {
-  document.getElementById('sonicCount').textContent = sonicRaceCollected;
-  document.getElementById('eggmanCount').textContent = eggmenCollected;
-
+function updateRace() {
+  document.getElementById('sonicCount').textContent = sonicRace;
+  document.getElementById('eggmanCount').textContent = eggmanRace;
   for (let i = 0; i < 7; i++) {
-    const sEl = document.getElementById('s' + i);
-    const eEl = document.getElementById('e' + i);
-
-    if (i < sonicRaceCollected) sEl.classList.add('filled-sonic');
-    else sEl.classList.remove('filled-sonic');
-
-    if (i < eggmenCollected) eEl.classList.add('filled-eggman');
-    else eEl.classList.remove('filled-eggman');
+    document.getElementById('s'+i).classList.toggle('filled-sonic', i < sonicRace);
+    document.getElementById('e'+i).classList.toggle('filled-eggman', i < eggmanRace);
   }
 }
-updateRaceDisplay();
+updateRace();
+
+function randomizeReels() {
+  reels = [0,1,2,3,4].map(() => Math.floor(Math.random() * symbols.length));
+  reels.forEach((idx, i) => reelEls[i].textContent = symbols[idx]);
+}
+randomizeReels();
 
 function haptic(type = 'medium') {
   try {
@@ -579,44 +528,43 @@ function haptic(type = 'medium') {
       else if (type === 'error') Telegram.WebApp.HapticFeedback.notificationOccurred('error');
       else Telegram.WebApp.HapticFeedback.impactOccurred(type);
     }
-  } catch(e){}
+  } catch(e) {}
 }
 
 holdBtns.forEach((btn, i) => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     if (!holdAvailable || isSpinning || inBonus) return;
     held[i] = !held[i];
     btn.classList.toggle('held', held[i]);
     btn.textContent = held[i] ? 'HELD' : 'HOLD';
     haptic('light');
-  });
+  };
 });
 
 nudgeBtns.forEach((btn, i) => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     if (nudgesLeft <= 0 || isSpinning) return;
     reels[i] = (reels[i] + 1) % symbols.length;
     reelEls[i].textContent = symbols[reels[i]];
     nudgesLeft--;
-    updateNudgeState();
+    updateNudge();
     haptic('light');
-    msgEl.textContent = nudgesLeft > 0 ? 'Nudges left: ' + nudgesLeft : 'Checking wins...';
+    msgEl.textContent = nudgesLeft > 0 ? 'Nudges left: ' + nudgesLeft : 'Checking...';
     if (nudgesLeft === 0) checkWin();
-  });
+  };
 });
 
 document.getElementById('betMinus').onclick = () => {
-  if (bet > 5 && !inBonus) { bet -= 5; updateBet(); haptic('light'); }
+  if (bet > 5 && !inBonus) { bet -= 5; betEl.textContent = 'Bet: ' + bet; haptic('light'); }
 };
 document.getElementById('betPlus').onclick = () => {
-  if (bet < 50 && !inBonus) { bet += 5; updateBet(); haptic('light'); }
+  if (bet < 50 && !inBonus) { bet += 5; betEl.textContent = 'Bet: ' + bet; haptic('light'); }
 };
-function updateBet() { betEl.textContent = 'Bet: ' + bet; }
 
-spinBtn.addEventListener('click', () => {
+spinBtn.onclick = () => {
   haptic('medium');
   spin();
-});
+};
 
 function spin() {
   if (isSpinning) return;
@@ -629,15 +577,15 @@ function spin() {
     }
     credits -= bet;
     creditsEl.textContent = credits;
-    saveState();
+    save();
   }
 
   winEl.textContent = '0';
   isSpinning = true;
-  msgEl.textContent = inBonus ? 'FREE SPIN ' + (6 - freeSpinsLeft) + '/5' : 'Spinning...';
+  msgEl.textContent = inBonus ? `FREE SPIN ${6 - freeSpinsLeft}/5` : 'Spinning...';
 
-  let spinCount = 0;
-  const spinInterval = setInterval(() => {
+  let count = 0;
+  const interval = setInterval(() => {
     playSound('spin');
     reels.forEach((_, i) => {
       if (!held[i]) {
@@ -645,15 +593,15 @@ function spin() {
         reelEls[i].textContent = symbols[idx];
       }
     });
-    spinCount++;
-    if (spinCount > 12) {
-      clearInterval(spinInterval);
-      finalizeSpin();
+    count++;
+    if (count > 12) {
+      clearInterval(interval);
+      finishSpin();
     }
   }, 75);
 }
 
-function finalizeSpin() {
+function finishSpin() {
   reels.forEach((_, i) => {
     if (!held[i]) {
       const idx = Math.floor(Math.random() * symbols.length);
@@ -664,257 +612,211 @@ function finalizeSpin() {
 
   isSpinning = false;
   held = [false,false,false,false,false];
-  holdBtns.forEach(btn => {
-    btn.classList.remove('held');
-    btn.textContent = 'HOLD';
+  holdBtns.forEach(b => {
+    b.classList.remove('held');
+    b.textContent = 'HOLD';
   });
 
-  // Track Sonic (🦔) vs Eggman (🤖) for the Race
-  reels.forEach(rIdx => {
-    if (symbols[rIdx] === '🦔') {
-      if (sonicRaceCollected < 7) {
-        sonicRaceCollected++;
-        playSound('emerald');
-      }
-    } else if (symbols[rIdx] === '🤖') {
-      if (eggmenCollected < 7) {
-        eggmenCollected++;
-        playSound('eggman');
-      }
-    }
+  // Race progress
+  reels.forEach(idx => {
+    if (symbols[idx] === '🦔' && sonicRace < 7) sonicRace++;
+    if (symbols[idx] === '🤖' && eggmanRace < 7) eggmanRace++;
   });
-  updateRaceDisplay();
-  saveState();
+  updateRace();
+  save();
 
-  // Check Winners of the Race (Both set to 1000 rings reward / penalty)
-  if (sonicRaceCollected >= 7) {
-    triggerSuperJackpot();
+  // Race finished?
+  if (sonicRace >= 7) {
+    const win = 1500 * (bet / 10);
+    credits += win;
+    creditsEl.textContent = credits;
+    winEl.textContent = win;
+    msgEl.textContent = '🌟 SONIC WINS THE RACE! +' + win + ' Rings!';
+    sonicRace = 0; eggmanRace = 0;
+    updateRace(); save();
+    playSound('win'); haptic('success');
+    afterSpin();
     return;
-  } else if (eggmenCollected >= 7) {
-    triggerEggmanTrap();
+  }
+  if (eggmanRace >= 7) {
+    const loss = Math.min(800 * (bet / 10), credits);
+    credits -= loss;
+    creditsEl.textContent = credits;
+    msgEl.textContent = '💥 EGGMAN WINS THE RACE! −' + loss + ' Rings';
+    sonicRace = 0; eggmanRace = 0;
+    updateRace(); save();
+    playSound('eggman'); haptic('error');
+    afterSpin();
     return;
   }
 
-  // Check Reel 1 Eggman Scratch Trap
-  if (!inBonus && symbols[reels[0]] === '🤖') {
-    openScratchCard('penalty');
-    return;
-  }
-
-  // Check Reel 4 Bonus Scratch Card
-  if (!inBonus && symbols[reels[4]] === '⭐') {
-    openScratchCard('bonus');
-    return;
-  }
-
-  // Check Free Spins (⭐ on middle reel)
-  if (!inBonus && symbols[reels[2]] === '⭐') {
-    startBonus();
-    return;
-  }
-
+  // Special features (only outside free spins)
   if (!inBonus) {
-    checkWin();
-    nudgesLeft = 1;
-    updateNudgeState();
-
-    if (Math.random() < 0.30) {
-      holdAvailable = true;
-      updateHoldState();
-      msgEl.textContent += ' | 🎯 HOLD available!';
-    } else {
-      holdAvailable = false;
-      updateHoldState();
+    if (symbols[reels[0]] === '🤖') {
+      openScratch('penalty');
+      return;
     }
-  } else {
-    checkWin();
+    if (symbols[reels[4]] === '⭐') {
+      openScratch('bonus');
+      return;
+    }
+    if (symbols[reels[2]] === '⭐') {
+      startFreeSpins();
+      return;
+    }
+  }
+
+  // Normal win check
+  checkWin();
+  afterSpin();
+}
+
+function afterSpin() {
+  if (inBonus) {
     freeSpinsLeft--;
-    if (freeSpinsLeft <= 0) endBonus();
-    else setTimeout(spin, 1400);
+    if (freeSpinsLeft <= 0) {
+      inBonus = false;
+      bonusMultiplier = 1;
+      msgEl.textContent = 'Free Spins finished!';
+    } else {
+      setTimeout(spin, 1300);
+      return;
+    }
+  }
+
+  nudgesLeft = 1;
+  updateNudge();
+
+  if (Math.random() < 0.32) {
+    holdAvailable = true;
+    updateHold();
+    if (!msgEl.textContent.includes('HOLD')) msgEl.textContent += ' | 🎯 HOLD available';
+  } else {
+    holdAvailable = false;
+    updateHold();
   }
 }
 
-function triggerSuperJackpot() {
-  const jackpotWin = 1000 * (bet / 10);
-  credits += jackpotWin;
-  creditsEl.textContent = credits;
-  winEl.textContent = jackpotWin;
-  msgEl.textContent = '🌟 SONIC WON THE RACE! + ' + jackpotWin + ' Rings! 🌟';
-  sonicRaceCollected = 0;
-  eggmenCollected = 0;
-  updateRaceDisplay();
-  saveState();
-  playSound('win');
-  haptic('success');
-  nudgesLeft = 0;
-  updateNudgeState();
-  holdAvailable = false;
-  updateHoldState();
-}
-
-function triggerEggmanTrap() {
-  const penalty = Math.min(1000 * (bet / 10), credits);
-  credits -= penalty;
-  creditsEl.textContent = credits;
-  msgEl.textContent = '💥 EGGMAN WON THE RACE! -' + penalty + ' Rings Penalty!';
-  sonicRaceCollected = 0;
-  eggmenCollected = 0;
-  updateRaceDisplay();
-  saveState();
-  playSound('eggman');
-  haptic('error');
-  nudgesLeft = 0;
-  updateNudgeState();
-  holdAvailable = false;
-  updateHoldState();
-}
-
-function openScratchCard(type) {
+function openScratch(type) {
   scratchType = type;
-  const mults = [1, 2, 3, 5];
-  pendingScratchMult = mults[Math.floor(Math.random() * mults.length)];
+  const mults = type === 'bonus' ? [2,3,5,8] : [1,2,3,4];
+  pendingMult = mults[Math.floor(Math.random() * mults.length)];
 
   if (type === 'penalty') {
-    scratchTitle.textContent = '🤖 EGGMAN TRAP! 🤖';
+    scratchTitle.textContent = '🤖 EGGMAN TRAP';
     scratchTitle.className = 'scratch-title penalty-title';
     scratchCard.className = 'scratch-card penalty';
     scratchPrize.className = 'scratch-prize penalty-text';
-    scratchPrize.innerHTML = '−' + (25 * pendingScratchMult) + '<small>RINGS PENALTY!</small>';
+    scratchPrize.innerHTML = '−' + (30 * pendingMult) + '<small>RINGS</small>';
     scratchCover.className = 'penalty-cover';
-    scratchCover.textContent = 'SCRATCH TO REVEAL LOSS';
+    scratchCover.textContent = 'SCRATCH TO REVEAL';
     claimBtn.className = 'scratch-btn penalty-btn';
-    claimBtn.textContent = 'ACCEPT LOSS';
+    claimBtn.textContent = 'ACCEPT';
     playSound('eggman');
   } else {
-    scratchTitle.textContent = '✨ BONUS SCRATCH ✨';
+    scratchTitle.textContent = '✨ BONUS SCRATCH';
     scratchTitle.className = 'scratch-title';
     scratchCard.className = 'scratch-card';
     scratchPrize.className = 'scratch-prize';
-    scratchPrize.innerHTML = '×' + pendingScratchMult + '<small>MULTIPLIER!</small>';
+    scratchPrize.innerHTML = '×' + pendingMult + '<small>MULTIPLIER</small>';
     scratchCover.className = '';
     scratchCover.textContent = 'TAP TO SCRATCH';
     claimBtn.className = 'scratch-btn';
-    claimBtn.textContent = 'CLAIM BONUS';
+    claimBtn.textContent = 'CLAIM';
     playSound('win');
   }
 
   scratchCover.classList.remove('hidden');
   claimBtn.style.display = 'none';
-  scratchOverlay.classList.add('show');
+  overlay.classList.add('show');
   haptic(type === 'penalty' ? 'error' : 'success');
 }
 
-scratchCover.addEventListener('click', () => {
+scratchCover.onclick = () => {
   scratchCover.classList.add('hidden');
   claimBtn.style.display = 'block';
-  if (scratchType === 'bonus') playSound('win');
-  else playSound('eggman');
   haptic('medium');
-});
+};
 
-claimBtn.addEventListener('click', () => {
+claimBtn.onclick = () => {
   if (scratchType === 'penalty') {
-    const loss = Math.min(25 * pendingScratchMult, credits);
+    const loss = Math.min(30 * pendingMult, credits);
     credits -= loss;
-    msgEl.textContent = '🤖 Eggman Trap: −' + loss + ' Rings!';
+    msgEl.textContent = '🤖 Trap: −' + loss + ' Rings';
   } else {
-    const baseWin = calculateWinAmount();
-    const finalWin = Math.max(baseWin, 30) * pendingScratchMult;
-    credits += finalWin;
-    winEl.textContent = finalWin;
-    msgEl.textContent = '✨ Scratch ×' + pendingScratchMult + ' → +' + finalWin + ' Rings!';
+    const base = Math.max(calculateWin(), 40);
+    const final = base * pendingMult;
+    credits += final;
+    winEl.textContent = final;
+    msgEl.textContent = '✨ Scratch ×' + pendingMult + ' → +' + final;
   }
-
   creditsEl.textContent = credits;
-  scratchOverlay.classList.remove('show');
-  saveState();
+  overlay.classList.remove('show');
+  save();
   haptic('success');
+  afterSpin();
+};
 
-  nudgesLeft = 1;
-  updateNudgeState();
-  if (Math.random() < 0.30) {
-    holdAvailable = true;
-    updateHoldState();
-  } else {
-    holdAvailable = false;
-    updateHoldState();
-  }
-});
-
-function calculateWinAmount() {
+function calculateWin() {
   const counts = {};
-  reels.forEach(i => {
-    const s = symbols[i];
-    counts[s] = (counts[s] || 0) + 1;
-  });
+  reels.forEach(i => counts[symbols[i]] = (counts[symbols[i]] || 0) + 1);
 
   let win = 0;
   for (const [sym, cnt] of Object.entries(counts)) {
     if (cnt >= 3 && sym !== '⭐' && sym !== '🤖') {
-      const base = values[sym];
-      const mult = (cnt === 5 ? 3 : cnt === 4 ? 2 : 1);
-      win = Math.round(base * mult * (bet / 10));
+      const mult = cnt === 5 ? 3 : cnt === 4 ? 2 : 1;
+      win = Math.round(values[sym] * mult * (bet / 10));
       break;
     }
   }
   if (win === 0 && Object.values(counts).some(c => c >= 2)) {
-    win = Math.round(20 * (bet / 10));
+    win = Math.round(25 * (bet / 10));
   }
   return win;
 }
 
-function startBonus() {
+function startFreeSpins() {
   inBonus = true;
   freeSpinsLeft = 5;
   bonusMultiplier = 2;
   holdAvailable = false;
   nudgesLeft = 0;
-  updateHoldState();
-  updateNudgeState();
+  updateHold();
+  updateNudge();
   msgEl.textContent = '🌟 SPECIAL STAGE! 5 Free Spins ×2';
   playSound('win');
   haptic('success');
-  setTimeout(spin, 1800);
-}
-
-function endBonus() {
-  inBonus = false;
-  bonusMultiplier = 1;
-  msgEl.textContent = 'Bonus finished!';
+  setTimeout(spin, 1600);
 }
 
 function checkWin() {
   const counts = {};
-  reels.forEach(i => {
-    const s = symbols[i];
-    counts[s] = (counts[s] || 0) + 1;
-  });
+  reels.forEach(i => counts[symbols[i]] = (counts[symbols[i]] || 0) + 1);
 
   let win = 0;
-  let messages = [];
+  let msgs = [];
 
-  const eggCount = counts['🤖'] || 0;
-  if (eggCount > 0) {
-    let loss = (eggmanPenalty[eggCount] || 0) * (bet / 10);
+  const egg = counts['🤖'] || 0;
+  if (egg > 0) {
+    let loss = (eggmanPenalty[egg] || 0) * (bet / 10);
     loss = Math.min(loss, credits);
     credits -= loss;
-    messages.push('🤖 ' + eggCount + ' Eggman −' + loss);
+    msgs.push('🤖 ' + egg + ' Eggman −' + loss);
     playSound('eggman');
   }
 
   for (const [sym, cnt] of Object.entries(counts)) {
     if (cnt >= 3 && sym !== '⭐' && sym !== '🤖') {
-      const base = values[sym];
       const mult = (cnt === 5 ? 3 : cnt === 4 ? 2 : 1) * bonusMultiplier;
-      win = Math.round(base * mult * (bet / 10));
-      messages.push(cnt + '× ' + sym + ' +' + win + (bonusMultiplier > 1 ? ' (×2)' : ''));
+      win = Math.round(values[sym] * mult * (bet / 10));
+      msgs.push(cnt + '× ' + sym + ' +' + win + (bonusMultiplier > 1 ? ' (×2)' : ''));
       break;
     }
   }
 
-  if (win === 0 && Object.values(counts).some(c => c >= 2) && eggCount === 0) {
-    win = Math.round(20 * bonusMultiplier * (bet / 10));
-    messages.push('Two matching +' + win);
+  if (win === 0 && Object.values(counts).some(c => c >= 2) && egg === 0) {
+    win = Math.round(25 * bonusMultiplier * (bet / 10));
+    msgs.push('Two matching +' + win);
   }
 
   if (win > 0) {
@@ -925,21 +827,19 @@ function checkWin() {
   }
 
   creditsEl.textContent = credits;
-  msgEl.textContent = messages.length ? messages.join(' | ') : 'No win';
-  saveState();
-  updateNudgeState();
+  msgEl.textContent = msgs.length ? msgs.join(' | ') : 'No win';
+  save();
 }
 
-function updateHoldState() {
-  holdBtns.forEach(btn => btn.disabled = !holdAvailable || isSpinning || inBonus);
+function updateHold() {
+  holdBtns.forEach(b => b.disabled = !holdAvailable || isSpinning || inBonus);
 }
-function updateNudgeState() {
-  nudgeBtns.forEach(btn => btn.disabled = nudgesLeft <= 0 || isSpinning || inBonus);
+function updateNudge() {
+  nudgeBtns.forEach(b => b.disabled = nudgesLeft <= 0 || isSpinning || inBonus);
 }
 
-updateHoldState();
-updateNudgeState();
-updateBet();
+updateHold();
+updateNudge();
 </script>
 </body>
 </html>
