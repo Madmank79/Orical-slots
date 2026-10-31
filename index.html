@@ -496,7 +496,6 @@ const values = {
   '🦔': 800, '💎': 400, '🦊': 200, '🥊': 200,
   '🌸': 200, '💍': 120, '🌭': 60, '🤖': 0, '⭐': 0
 };
-// Option B: Softened and balanced Eggman penalties
 const eggmanPenalty = {1:30, 2:60, 3:100, 4:200, 5:500};
 
 let reels = [];
@@ -504,7 +503,15 @@ let held = [false,false,false,false,false];
 let holdAvailable = false;
 let nudgesLeft = 0;
 
-let credits = localStorage.getItem('sonic_credits') ? parseInt(localStorage.getItem('sonic_credits')) : 1000;
+// Safe credit loader with automatic fallback if corrupted/zero
+let credits = localStorage.getItem('sonic_credits');
+if (credits === null || isNaN(parseInt(credits)) || parseInt(credits) < 10) {
+  credits = 1000;
+  localStorage.setItem('sonic_credits', credits);
+} else {
+  credits = parseInt(credits);
+}
+
 let emeraldsCollected = localStorage.getItem('sonic_emeralds') ? parseInt(localStorage.getItem('sonic_emeralds')) : 0;
 let eggmenCollected = localStorage.getItem('sonic_eggmen') ? parseInt(localStorage.getItem('sonic_eggmen')) : 0;
 
@@ -531,6 +538,9 @@ const scratchCard = document.getElementById('scratchCard');
 const scratchCover = document.getElementById('scratchCover');
 const scratchPrize = document.getElementById('scratchPrize');
 const claimBtn = document.getElementById('claimBtn');
+
+// Initialize balance display element immediately
+creditsEl.textContent = credits;
 
 // Clean Starting State: Randomize reels on load so player isn't forced to nudge rings right away
 function randomizeStartingReels() {
