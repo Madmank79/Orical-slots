@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SonicSlots</title>
+<title>Football Slots</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: #030814;
+    background: #0a1f0a;
     color: #fff;
     font-family: 'Segoe UI', system-ui, sans-serif;
     min-height: 100vh;
@@ -19,18 +19,18 @@
   #game {
     width: 100%;
     max-width: 400px;
-    background: linear-gradient(180deg, #0b1c33 0%, #050d1a 100%);
+    background: linear-gradient(180deg, #0d2b0d 0%, #071507 100%);
     border-radius: 24px;
-    border: 2px solid #00b4ff;
-    box-shadow: 0 0 30px rgba(0,180,255,0.3);
+    border: 2px solid #4caf50;
+    box-shadow: 0 0 30px rgba(76,175,80,0.3);
     padding: 16px 14px 24px;
   }
 
   .title {
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
-    background: linear-gradient(90deg, #00e5ff, #69f0ae);
+    background: linear-gradient(90deg, #81c784, #ffeb3b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
@@ -42,7 +42,7 @@
     border-radius: 14px;
     padding: 8px 10px;
     margin-bottom: 12px;
-    border: 1px solid #1a3a5c;
+    border: 1px solid #2e7d32;
   }
   .race-header {
     display: flex;
@@ -51,8 +51,8 @@
     font-weight: 700;
     margin-bottom: 6px;
   }
-  .sonic-label { color: #00e5ff; }
-  .eggman-label { color: #ff1744; }
+  .goals-label { color: #81c784; }
+  .fouls-label { color: #ef5350; }
   .race-track {
     display: flex;
     justify-content: space-between;
@@ -63,7 +63,7 @@
     gap: 3px;
     flex: 1;
   }
-  .track-side.eggman-side { justify-content: flex-end; }
+  .track-side.fouls-side { justify-content: flex-end; }
   .race-slot {
     width: 22px;
     height: 22px;
@@ -77,22 +77,22 @@
     opacity: 0.25;
     transition: all 0.3s;
   }
-  .race-slot.filled-sonic {
+  .race-slot.filled-goals {
     opacity: 1;
-    border-color: #00e5ff;
-    box-shadow: 0 0 8px #00e5ff;
-    background: rgba(0,229,255,0.2);
+    border-color: #81c784;
+    box-shadow: 0 0 8px #81c784;
+    background: rgba(129,199,132,0.2);
   }
-  .race-slot.filled-eggman {
+  .race-slot.filled-fouls {
     opacity: 1;
-    border-color: #ff1744;
-    box-shadow: 0 0 8px #ff1744;
-    background: rgba(255,23,68,0.2);
+    border-color: #ef5350;
+    box-shadow: 0 0 8px #ef5350;
+    background: rgba(239,83,80,0.2);
   }
   .vs-divider {
     font-size: 10px;
     font-weight: 900;
-    color: #ffdd55;
+    color: #ffeb3b;
     display: flex;
     align-items: center;
   }
@@ -104,26 +104,26 @@
     border-radius: 14px;
     padding: 10px 14px;
     margin-bottom: 10px;
-    border: 1px solid #1a3a5c;
+    border: 1px solid #2e7d32;
   }
   .bal-item { text-align: center; }
-  .bal-label { font-size: 10px; color: #8ab4d9; letter-spacing: 1px; }
-  .bal-value { font-size: 20px; font-weight: 700; color: #ffd700; }
+  .bal-label { font-size: 10px; color: #a5d6a7; letter-spacing: 1px; }
+  .bal-value { font-size: 20px; font-weight: 700; color: #ffeb3b; }
 
   #message {
     text-align: center;
     min-height: 22px;
     font-size: 13px;
-    color: #ffdd55;
+    color: #ffeb3b;
     margin-bottom: 10px;
     font-weight: 600;
   }
 
   .reels-box {
-    background: #02070e;
+    background: #051005;
     border-radius: 16px;
     padding: 10px 8px;
-    border: 2px solid #1e4a7a;
+    border: 2px solid #388e3c;
     margin-bottom: 12px;
     box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
   }
@@ -131,9 +131,9 @@
   .reel {
     flex: 1;
     height: 100px;
-    background: linear-gradient(180deg, #0d2138, #050b12);
+    background: linear-gradient(180deg, #0d2b0d, #051005);
     border-radius: 12px;
-    border: 2px solid #2b6ca8;
+    border: 2px solid #4caf50;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,15 +156,15 @@
     font-weight: 700;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(180deg, #1e4a7a, #163a5e);
-    color: #c8e4ff;
+    background: linear-gradient(180deg, #2e7d32, #1b5e20);
+    color: #c8e6c9;
     cursor: pointer;
-    box-shadow: 0 3px 0 #0d2a45;
+    box-shadow: 0 3px 0 #0d3b0d;
   }
   .btn-row button.held {
-    background: linear-gradient(180deg, #ff5252, #d32f2f);
+    background: linear-gradient(180deg, #ef5350, #c62828);
     color: white;
-    box-shadow: 0 3px 0 #9a0000, 0 0 10px rgba(255,82,82,0.5);
+    box-shadow: 0 3px 0 #8e0000, 0 0 10px rgba(239,83,80,0.5);
   }
   .btn-row button:disabled {
     opacity: 0.35;
@@ -182,13 +182,13 @@
     height: 115px;
     border-radius: 50%;
     border: none;
-    background: radial-gradient(circle at 35% 30%, #69f0ae, #00c853 55%, #009624);
+    background: radial-gradient(circle at 35% 30%, #a5d6a7, #4caf50 55%, #2e7d32);
     color: white;
     font-size: 24px;
     font-weight: 900;
     cursor: pointer;
-    box-shadow: 0 0 0 6px rgba(0,200,83,0.2),
-                0 8px 24px rgba(0,200,83,0.4),
+    box-shadow: 0 0 0 6px rgba(76,175,80,0.25),
+                0 8px 24px rgba(76,175,80,0.4),
                 inset 0 -6px 12px rgba(0,0,0,0.25);
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
@@ -206,17 +206,17 @@
     height: 38px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(180deg, #1e4a7a, #163a5e);
+    background: linear-gradient(180deg, #2e7d32, #1b5e20);
     color: white;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 3px 0 #0d2a45;
+    box-shadow: 0 3px 0 #0d3b0d;
   }
   #betDisplay {
     font-size: 16px;
     font-weight: 700;
-    color: #ffdd55;
+    color: #ffeb3b;
     min-width: 80px;
     text-align: center;
   }
@@ -226,12 +226,11 @@
     border-radius: 12px;
     padding: 10px 12px;
     font-size: 10px;
-    color: #9ec5e8;
+    color: #a5d6a7;
     line-height: 1.45;
   }
-  .paytable strong { color: #00e5ff; }
+  .paytable strong { color: #81c784; }
 
-  /* Scratch Overlay */
   #scratchOverlay {
     display: none;
     position: fixed;
@@ -247,16 +246,16 @@
   .scratch-card {
     width: 260px;
     height: 160px;
-    background: linear-gradient(135deg, #1a3a5c, #0d2138);
+    background: linear-gradient(135deg, #1b5e20, #0d2b0d);
     border-radius: 14px;
-    border: 3px solid #00e5ff;
+    border: 3px solid #81c784;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 25px rgba(0,229,255,0.4);
+    box-shadow: 0 0 25px rgba(129,199,132,0.4);
   }
   .scratch-card.penalty {
-    border-color: #ff1744;
-    box-shadow: 0 0 25px rgba(255,23,68,0.5);
+    border-color: #ef5350;
+    box-shadow: 0 0 25px rgba(239,83,80,0.5);
   }
   .scratch-prize {
     position: absolute;
@@ -267,19 +266,19 @@
     align-items: center;
     font-size: 38px;
     font-weight: 900;
-    color: #ffd700;
-    text-shadow: 0 0 12px #ffd700;
+    color: #ffeb3b;
+    text-shadow: 0 0 12px #ffeb3b;
   }
   .scratch-prize.penalty-text {
-    color: #ff1744;
-    text-shadow: 0 0 12px #ff1744;
+    color: #ef5350;
+    text-shadow: 0 0 12px #ef5350;
   }
   .scratch-prize small { font-size: 14px; color: #fff; margin-top: 4px; }
 
   #scratchCover {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(45deg, #4a90d9, #4a90d9 10px, #3a7bc8 10px, #3a7bc8 20px);
+    background: repeating-linear-gradient(45deg, #388e3c, #388e3c 10px, #2e7d32 10px, #2e7d32 20px);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -289,65 +288,65 @@
     color: white;
   }
   #scratchCover.penalty-cover {
-    background: repeating-linear-gradient(45deg, #d32f2f, #d32f2f 10px, #b71c1c 10px, #b71c1c 20px);
+    background: repeating-linear-gradient(45deg, #c62828, #c62828 10px, #b71c1c 10px, #b71c1c 20px);
   }
   #scratchCover.hidden { display: none; }
 
-  .scratch-title { color: #00e5ff; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
-  .scratch-title.penalty-title { color: #ff1744; }
+  .scratch-title { color: #81c784; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
+  .scratch-title.penalty-title { color: #ef5350; }
 
   .scratch-btn {
     margin-top: 16px;
     padding: 10px 28px;
-    background: linear-gradient(180deg, #00e676, #00a844);
+    background: linear-gradient(180deg, #81c784, #4caf50);
     border: none;
     border-radius: 25px;
-    color: #003310;
+    color: #003300;
     font-size: 15px;
     font-weight: 800;
     cursor: pointer;
   }
   .scratch-btn.penalty-btn {
-    background: linear-gradient(180deg, #ff1744, #d50000);
+    background: linear-gradient(180deg, #ef5350, #c62828);
     color: white;
   }
 </style>
 </head>
 <body>
 <div id="game">
-  <div class="title">SonicSlots</div>
+  <div class="title">⚽ FootballSlots</div>
 
   <div class="race-box">
     <div class="race-header">
-      <span class="sonic-label">🦔 SONIC (<span id="sonicCount">0</span>/7)</span>
-      <span class="eggman-label">EGGMAN (<span id="eggmanCount">0</span>/7) 🤖</span>
+      <span class="goals-label">⚽ GOALS (<span id="goalsCount">0</span>/7)</span>
+      <span class="fouls-label">FOULS (<span id="foulsCount">0</span>/7) 🔴</span>
     </div>
     <div class="race-track">
       <div class="track-side">
-        <div class="race-slot" id="s0">🦔</div>
-        <div class="race-slot" id="s1">🦔</div>
-        <div class="race-slot" id="s2">🦔</div>
-        <div class="race-slot" id="s3">🦔</div>
-        <div class="race-slot" id="s4">🦔</div>
-        <div class="race-slot" id="s5">🦔</div>
-        <div class="race-slot" id="s6">🦔</div>
+        <div class="race-slot" id="g0">⚽</div>
+        <div class="race-slot" id="g1">⚽</div>
+        <div class="race-slot" id="g2">⚽</div>
+        <div class="race-slot" id="g3">⚽</div>
+        <div class="race-slot" id="g4">⚽</div>
+        <div class="race-slot" id="g5">⚽</div>
+        <div class="race-slot" id="g6">⚽</div>
       </div>
       <div class="vs-divider">VS</div>
-      <div class="track-side eggman-side">
-        <div class="race-slot" id="e6">🤖</div>
-        <div class="race-slot" id="e5">🤖</div>
-        <div class="race-slot" id="e4">🤖</div>
-        <div class="race-slot" id="e3">🤖</div>
-        <div class="race-slot" id="e2">🤖</div>
-        <div class="race-slot" id="e1">🤖</div>
-        <div class="race-slot" id="e0">🤖</div>
+      <div class="track-side fouls-side">
+        <div class="race-slot" id="f6">🔴</div>
+        <div class="race-slot" id="f5">🔴</div>
+        <div class="race-slot" id="f4">🔴</div>
+        <div class="race-slot" id="f3">🔴</div>
+        <div class="race-slot" id="f2">🔴</div>
+        <div class="race-slot" id="f1">🔴</div>
+        <div class="race-slot" id="f0">🔴</div>
       </div>
     </div>
   </div>
 
   <div class="balance-bar">
     <div class="bal-item">
-      <div class="bal-label">RINGS</div>
+      <div class="bal-label">COINS</div>
       <div class="bal-value" id="credits">1000</div>
     </div>
     <div class="bal-item">
@@ -360,11 +359,11 @@
 
   <div class="reels-box">
     <div class="reels-row">
-      <div class="reel"><div class="symbol" id="r0">💍</div></div>
-      <div class="reel"><div class="symbol" id="r1">💍</div></div>
-      <div class="reel"><div class="symbol" id="r2">💍</div></div>
-      <div class="reel"><div class="symbol" id="r3">💍</div></div>
-      <div class="reel"><div class="symbol" id="r4">💍</div></div>
+      <div class="reel"><div class="symbol" id="r0">⚽</div></div>
+      <div class="reel"><div class="symbol" id="r1">⚽</div></div>
+      <div class="reel"><div class="symbol" id="r2">⚽</div></div>
+      <div class="reel"><div class="symbol" id="r3">⚽</div></div>
+      <div class="reel"><div class="symbol" id="r4">⚽</div></div>
     </div>
   </div>
 
@@ -395,17 +394,17 @@
 
   <div class="paytable">
     <strong>Paytable</strong><br>
-    🦔 Sonic = 800 &nbsp;|&nbsp; 💎 Emerald = 400<br>
-    🦊 Tails / 🥊 Knuckles / 🌸 Amy = 200<br>
-    💍 Ring = 120 &nbsp;|&nbsp; 🌭 Chili Dog = 60<br>
-    🤖 Eggman: 1=−40 &nbsp;2=−80 &nbsp;3=−150 &nbsp;4=−300 &nbsp;5=−800<br>
-    ⭐ Middle = Free Spins &nbsp;|&nbsp; ⭐ Reel 4 = Bonus Scratch<br>
-    🤖 Reel 1 = Eggman Trap
+    ⚽ Football = 800 &nbsp;|&nbsp; 🏆 Trophy = 500<br>
+    👟 Boots / 🧤 Gloves / 🥅 Goal = 250<br>
+    🏅 Medal = 150 &nbsp;|&nbsp; 🟡 Yellow = 80<br>
+    🔴 Red Card: 1=−40  2=−80  3=−150  4=−300  5=−800<br>
+    ⭐ Middle = Free Kicks &nbsp;|&nbsp; ⭐ Reel 4 = Bonus Scratch<br>
+    🔴 Reel 1 = Red Card Trap
   </div>
 </div>
 
 <div id="scratchOverlay">
-  <div class="scratch-title" id="scratchTitle">✨ SCRATCH CARD ✨</div>
+  <div class="scratch-title" id="scratchTitle">✨ BONUS SCRATCH ✨</div>
   <div class="scratch-card" id="scratchCard">
     <div class="scratch-prize" id="scratchPrize">×5<small>MULTIPLIER!</small></div>
     <div id="scratchCover">TAP TO SCRATCH</div>
@@ -448,7 +447,7 @@ function playSound(type) {
       gain.gain.setValueAtTime(0.12, now);
       gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
       osc.start(now); osc.stop(now + 0.35);
-    } else if (type === 'eggman') {
+    } else if (type === 'foul') {
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(120, now);
       osc.frequency.linearRampToValueAtTime(60, now + 0.3);
@@ -459,21 +458,21 @@ function playSound(type) {
   } catch(e) {}
 }
 
-const symbols = ['🦔','🦊','🥊','🌸','💍','💎','🤖','🌭','⭐'];
+const symbols = ['⚽','🏆','👟','🧤','🥅','🏅','🔴','🟡','⭐'];
 const values = {
-  '🦔': 800, '💎': 400, '🦊': 200, '🥊': 200,
-  '🌸': 200, '💍': 120, '🌭': 60, '🤖': 0, '⭐': 0
+  '⚽': 800, '🏆': 500, '👟': 250, '🧤': 250,
+  '🥅': 250, '🏅': 150, '🟡': 80, '🔴': 0, '⭐': 0
 };
-const eggmanPenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
+const foulPenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
 
 let reels = [];
 let held = [false,false,false,false,false];
 let holdAvailable = false;
 let nudgesLeft = 0;
-let credits = parseInt(localStorage.getItem('sonic_credits')) || 1000;
+let credits = parseInt(localStorage.getItem('football_credits')) || 1000;
 if (credits < 50) credits = 1000;
-let sonicRace = parseInt(localStorage.getItem('sonic_race')) || 0;
-let eggmanRace = parseInt(localStorage.getItem('sonic_eggman')) || 0;
+let goalsRace = parseInt(localStorage.getItem('football_goals')) || 0;
+let foulsRace = parseInt(localStorage.getItem('football_fouls')) || 0;
 let bet = 10;
 let isSpinning = false;
 let inBonus = false;
@@ -500,17 +499,17 @@ const claimBtn = document.getElementById('claimBtn');
 creditsEl.textContent = credits;
 
 function save() {
-  localStorage.setItem('sonic_credits', credits);
-  localStorage.setItem('sonic_race', sonicRace);
-  localStorage.setItem('sonic_eggman', eggmanRace);
+  localStorage.setItem('football_credits', credits);
+  localStorage.setItem('football_goals', goalsRace);
+  localStorage.setItem('football_fouls', foulsRace);
 }
 
 function updateRace() {
-  document.getElementById('sonicCount').textContent = sonicRace;
-  document.getElementById('eggmanCount').textContent = eggmanRace;
+  document.getElementById('goalsCount').textContent = goalsRace;
+  document.getElementById('foulsCount').textContent = foulsRace;
   for (let i = 0; i < 7; i++) {
-    document.getElementById('s'+i).classList.toggle('filled-sonic', i < sonicRace);
-    document.getElementById('e'+i).classList.toggle('filled-eggman', i < eggmanRace);
+    document.getElementById('g'+i).classList.toggle('filled-goals', i < goalsRace);
+    document.getElementById('f'+i).classList.toggle('filled-fouls', i < foulsRace);
   }
 }
 updateRace();
@@ -571,7 +570,7 @@ function spin() {
 
   if (!inBonus) {
     if (credits < bet) {
-      msgEl.textContent = 'Not enough Rings!';
+      msgEl.textContent = 'Not enough Coins!';
       haptic('error');
       return;
     }
@@ -582,7 +581,7 @@ function spin() {
 
   winEl.textContent = '0';
   isSpinning = true;
-  msgEl.textContent = inBonus ? `FREE SPIN ${6 - freeSpinsLeft}/5` : 'Spinning...';
+  msgEl.textContent = inBonus ? `FREE KICK ${6 - freeSpinsLeft}/5` : 'Spinning...';
 
   let count = 0;
   const interval = setInterval(() => {
@@ -619,40 +618,40 @@ function finishSpin() {
 
   // Race progress
   reels.forEach(idx => {
-    if (symbols[idx] === '🦔' && sonicRace < 7) sonicRace++;
-    if (symbols[idx] === '🤖' && eggmanRace < 7) eggmanRace++;
+    if (symbols[idx] === '⚽' && goalsRace < 7) goalsRace++;
+    if (symbols[idx] === '🔴' && foulsRace < 7) foulsRace++;
   });
   updateRace();
   save();
 
   // Race finished?
-  if (sonicRace >= 7) {
+  if (goalsRace >= 7) {
     const win = 1500 * (bet / 10);
     credits += win;
     creditsEl.textContent = credits;
     winEl.textContent = win;
-    msgEl.textContent = '🌟 SONIC WINS THE RACE! +' + win + ' Rings!';
-    sonicRace = 0; eggmanRace = 0;
+    msgEl.textContent = '🏆 GOALS WIN THE RACE! +' + win + ' Coins!';
+    goalsRace = 0; foulsRace = 0;
     updateRace(); save();
     playSound('win'); haptic('success');
     afterSpin();
     return;
   }
-  if (eggmanRace >= 7) {
+  if (foulsRace >= 7) {
     const loss = Math.min(800 * (bet / 10), credits);
     credits -= loss;
     creditsEl.textContent = credits;
-    msgEl.textContent = '💥 EGGMAN WINS THE RACE! −' + loss + ' Rings';
-    sonicRace = 0; eggmanRace = 0;
+    msgEl.textContent = '🔴 FOULS WIN THE RACE! −' + loss + ' Coins';
+    goalsRace = 0; foulsRace = 0;
     updateRace(); save();
-    playSound('eggman'); haptic('error');
+    playSound('foul'); haptic('error');
     afterSpin();
     return;
   }
 
-  // Special features (only outside free spins)
+  // Special features
   if (!inBonus) {
-    if (symbols[reels[0]] === '🤖') {
+    if (symbols[reels[0]] === '🔴') {
       openScratch('penalty');
       return;
     }
@@ -666,7 +665,6 @@ function finishSpin() {
     }
   }
 
-  // Normal win check
   checkWin();
   afterSpin();
 }
@@ -677,7 +675,7 @@ function afterSpin() {
     if (freeSpinsLeft <= 0) {
       inBonus = false;
       bonusMultiplier = 1;
-      msgEl.textContent = 'Free Spins finished!';
+      msgEl.textContent = 'Free Kicks finished!';
     } else {
       setTimeout(spin, 1300);
       return;
@@ -703,16 +701,16 @@ function openScratch(type) {
   pendingMult = mults[Math.floor(Math.random() * mults.length)];
 
   if (type === 'penalty') {
-    scratchTitle.textContent = '🤖 EGGMAN TRAP';
+    scratchTitle.textContent = '🔴 RED CARD TRAP';
     scratchTitle.className = 'scratch-title penalty-title';
     scratchCard.className = 'scratch-card penalty';
     scratchPrize.className = 'scratch-prize penalty-text';
-    scratchPrize.innerHTML = '−' + (30 * pendingMult) + '<small>RINGS</small>';
+    scratchPrize.innerHTML = '−' + (30 * pendingMult) + '<small>COINS</small>';
     scratchCover.className = 'penalty-cover';
     scratchCover.textContent = 'SCRATCH TO REVEAL';
     claimBtn.className = 'scratch-btn penalty-btn';
     claimBtn.textContent = 'ACCEPT';
-    playSound('eggman');
+    playSound('foul');
   } else {
     scratchTitle.textContent = '✨ BONUS SCRATCH';
     scratchTitle.className = 'scratch-title';
@@ -742,7 +740,7 @@ claimBtn.onclick = () => {
   if (scratchType === 'penalty') {
     const loss = Math.min(30 * pendingMult, credits);
     credits -= loss;
-    msgEl.textContent = '🤖 Trap: −' + loss + ' Rings';
+    msgEl.textContent = '🔴 Trap: −' + loss + ' Coins';
   } else {
     const base = Math.max(calculateWin(), 40);
     const final = base * pendingMult;
@@ -763,7 +761,7 @@ function calculateWin() {
 
   let win = 0;
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🤖') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🔴') {
       const mult = cnt === 5 ? 3 : cnt === 4 ? 2 : 1;
       win = Math.round(values[sym] * mult * (bet / 10));
       break;
@@ -783,7 +781,7 @@ function startFreeSpins() {
   nudgesLeft = 0;
   updateHold();
   updateNudge();
-  msgEl.textContent = '🌟 SPECIAL STAGE! 5 Free Spins ×2';
+  msgEl.textContent = '🌟 FREE KICKS! 5 Free Spins ×2';
   playSound('win');
   haptic('success');
   setTimeout(spin, 1600);
@@ -796,17 +794,17 @@ function checkWin() {
   let win = 0;
   let msgs = [];
 
-  const egg = counts['🤖'] || 0;
-  if (egg > 0) {
-    let loss = (eggmanPenalty[egg] || 0) * (bet / 10);
+  const fouls = counts['🔴'] || 0;
+  if (fouls > 0) {
+    let loss = (foulPenalty[fouls] || 0) * (bet / 10);
     loss = Math.min(loss, credits);
     credits -= loss;
-    msgs.push('🤖 ' + egg + ' Eggman −' + loss);
-    playSound('eggman');
+    msgs.push('🔴 ' + fouls + ' Red Card −' + loss);
+    playSound('foul');
   }
 
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🤖') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🔴') {
       const mult = (cnt === 5 ? 3 : cnt === 4 ? 2 : 1) * bonusMultiplier;
       win = Math.round(values[sym] * mult * (bet / 10));
       msgs.push(cnt + '× ' + sym + ' +' + win + (bonusMultiplier > 1 ? ' (×2)' : ''));
@@ -814,7 +812,7 @@ function checkWin() {
     }
   }
 
-  if (win === 0 && Object.values(counts).some(c => c >= 2) && egg === 0) {
+  if (win === 0 && Object.values(counts).some(c => c >= 2) && fouls === 0) {
     win = Math.round(25 * bonusMultiplier * (bet / 10));
     msgs.push('Two matching +' + win);
   }
