@@ -34,7 +34,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
-    letter-spacing: 1px;
   }
 
   .race-box {
@@ -53,262 +52,136 @@
   }
   .goals-label { color: #81c784; }
   .fouls-label { color: #ef5350; }
-  .race-track {
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
-  }
-  .track-side {
-    display: flex;
-    gap: 3px;
-    flex: 1;
-  }
+  .race-track { display: flex; justify-content: space-between; gap: 4px; }
+  .track-side { display: flex; gap: 3px; flex: 1; }
   .track-side.fouls-side { justify-content: flex-end; }
   .race-slot {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
+    width: 22px; height: 22px; border-radius: 50%;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    opacity: 0.25;
-    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; opacity: 0.25; transition: all 0.3s;
   }
   .race-slot.filled-goals {
-    opacity: 1;
-    border-color: #81c784;
-    box-shadow: 0 0 8px #81c784;
+    opacity: 1; border-color: #81c784; box-shadow: 0 0 8px #81c784;
     background: rgba(129,199,132,0.2);
   }
   .race-slot.filled-fouls {
-    opacity: 1;
-    border-color: #ef5350;
-    box-shadow: 0 0 8px #ef5350;
+    opacity: 1; border-color: #ef5350; box-shadow: 0 0 8px #ef5350;
     background: rgba(239,83,80,0.2);
   }
-  .vs-divider {
-    font-size: 10px;
-    font-weight: 900;
-    color: #ffeb3b;
-    display: flex;
-    align-items: center;
-  }
+  .vs-divider { font-size: 10px; font-weight: 900; color: #ffeb3b; display: flex; align-items: center; }
 
   .balance-bar {
-    display: flex;
-    justify-content: space-between;
-    background: rgba(0,0,0,0.5);
-    border-radius: 14px;
-    padding: 10px 14px;
-    margin-bottom: 10px;
-    border: 1px solid #2e7d32;
+    display: flex; justify-content: space-between;
+    background: rgba(0,0,0,0.5); border-radius: 14px;
+    padding: 10px 14px; margin-bottom: 10px; border: 1px solid #2e7d32;
   }
   .bal-item { text-align: center; }
   .bal-label { font-size: 10px; color: #a5d6a7; letter-spacing: 1px; }
   .bal-value { font-size: 20px; font-weight: 700; color: #ffeb3b; }
 
   #message {
-    text-align: center;
-    min-height: 22px;
-    font-size: 13px;
-    color: #ffeb3b;
-    margin-bottom: 10px;
-    font-weight: 600;
+    text-align: center; min-height: 22px; font-size: 13px;
+    color: #ffeb3b; margin-bottom: 10px; font-weight: 600;
   }
 
   .reels-box {
-    background: #051005;
-    border-radius: 16px;
-    padding: 10px 8px;
-    border: 2px solid #388e3c;
-    margin-bottom: 12px;
+    background: #051005; border-radius: 16px; padding: 10px 8px;
+    border: 2px solid #388e3c; margin-bottom: 12px;
     box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
   }
   .reels-row { display: flex; gap: 6px; }
   .reel {
-    flex: 1;
-    height: 100px;
+    flex: 1; height: 100px;
     background: linear-gradient(180deg, #0d2b0d, #051005);
-    border-radius: 12px;
-    border: 2px solid #4caf50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+    border-radius: 12px; border: 2px solid #4caf50;
+    display: flex; align-items: center; justify-content: center;
   }
-  .symbol {
-    font-size: 42px;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.7));
-  }
+  .symbol { font-size: 42px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.7)); }
 
-  .btn-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
+  .btn-row { display: flex; gap: 6px; margin-bottom: 8px; }
   .btn-row button {
-    flex: 1;
-    padding: 10px 0;
-    font-size: 11px;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
+    flex: 1; padding: 10px 0; font-size: 11px; font-weight: 700;
+    border: none; border-radius: 10px;
     background: linear-gradient(180deg, #2e7d32, #1b5e20);
-    color: #c8e6c9;
-    cursor: pointer;
-    box-shadow: 0 3px 0 #0d3b0d;
+    color: #c8e6c9; cursor: pointer; box-shadow: 0 3px 0 #0d3b0d;
   }
   .btn-row button.held {
     background: linear-gradient(180deg, #ef5350, #c62828);
-    color: white;
-    box-shadow: 0 3px 0 #8e0000, 0 0 10px rgba(239,83,80,0.5);
+    color: white; box-shadow: 0 3px 0 #8e0000, 0 0 10px rgba(239,83,80,0.5);
   }
-  .btn-row button:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
+  .btn-row button:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
 
-  .spin-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 14px 0 10px;
-  }
+  .spin-wrap { display: flex; justify-content: center; margin: 14px 0 10px; }
   #spinBtn {
-    width: 115px;
-    height: 115px;
-    border-radius: 50%;
-    border: none;
+    width: 115px; height: 115px; border-radius: 50%; border: none;
     background: radial-gradient(circle at 35% 30%, #a5d6a7, #4caf50 55%, #2e7d32);
-    color: white;
-    font-size: 24px;
-    font-weight: 900;
-    cursor: pointer;
-    box-shadow: 0 0 0 6px rgba(76,175,80,0.25),
-                0 8px 24px rgba(76,175,80,0.4),
-                inset 0 -6px 12px rgba(0,0,0,0.25);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: white; font-size: 24px; font-weight: 900; cursor: pointer;
+    box-shadow: 0 0 0 6px rgba(76,175,80,0.25), 0 8px 24px rgba(76,175,80,0.4);
   }
   #spinBtn:active { transform: scale(0.93); }
 
-  .bet-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 12px;
-  }
+  .bet-row { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 12px; }
   .bet-row button {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: none;
+    width: 38px; height: 38px; border-radius: 50%; border: none;
     background: linear-gradient(180deg, #2e7d32, #1b5e20);
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 3px 0 #0d3b0d;
+    color: white; font-size: 20px; font-weight: bold; cursor: pointer;
   }
-  #betDisplay {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffeb3b;
-    min-width: 80px;
-    text-align: center;
-  }
+  #betDisplay { font-size: 16px; font-weight: 700; color: #ffeb3b; min-width: 80px; text-align: center; }
 
   .paytable {
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 10px;
-    color: #a5d6a7;
-    line-height: 1.45;
+    background: rgba(0,0,0,0.4); border-radius: 12px;
+    padding: 10px 12px; font-size: 10px; color: #a5d6a7; line-height: 1.45;
   }
   .paytable strong { color: #81c784; }
 
-  #scratchOverlay {
+  /* Penalty Kick Overlay */
+  #penaltyOverlay {
     display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.9);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; align-items: center;
     flex-direction: column;
   }
-  #scratchOverlay.show { display: flex; }
+  #penaltyOverlay.show { display: flex; }
 
-  .scratch-card {
-    width: 260px;
-    height: 160px;
-    background: linear-gradient(135deg, #1b5e20, #0d2b0d);
-    border-radius: 14px;
-    border: 3px solid #81c784;
+  .penalty-title {
+    font-size: 22px; font-weight: 800; color: #ffeb3b;
+    margin-bottom: 20px; text-align: center;
+  }
+  .goal-area {
+    width: 280px; height: 160px;
+    background: linear-gradient(180deg, #1b5e20, #0d2b0d);
+    border: 4px solid #fff;
+    border-radius: 8px;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 25px rgba(129,199,132,0.4);
+    margin-bottom: 24px;
+    display: flex; align-items: flex-end; justify-content: center;
   }
-  .scratch-card.penalty {
-    border-color: #ef5350;
-    box-shadow: 0 0 25px rgba(239,83,80,0.5);
+  .keeper {
+    position: absolute; bottom: 10px;
+    font-size: 42px; transition: left 0.35s ease;
   }
-  .scratch-prize {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 38px;
-    font-weight: 900;
-    color: #ffeb3b;
-    text-shadow: 0 0 12px #ffeb3b;
+  .ball {
+    position: absolute; bottom: 8px;
+    font-size: 28px; transition: all 0.4s ease;
   }
-  .scratch-prize.penalty-text {
-    color: #ef5350;
-    text-shadow: 0 0 12px #ef5350;
+  .shot-buttons {
+    display: flex; gap: 12px;
   }
-  .scratch-prize small { font-size: 14px; color: #fff; margin-top: 4px; }
-
-  #scratchCover {
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(45deg, #388e3c, #388e3c 10px, #2e7d32 10px, #2e7d32 20px);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: white;
-  }
-  #scratchCover.penalty-cover {
-    background: repeating-linear-gradient(45deg, #c62828, #c62828 10px, #b71c1c 10px, #b71c1c 20px);
-  }
-  #scratchCover.hidden { display: none; }
-
-  .scratch-title { color: #81c784; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
-  .scratch-title.penalty-title { color: #ef5350; }
-
-  .scratch-btn {
-    margin-top: 16px;
-    padding: 10px 28px;
+  .shot-btn {
+    padding: 14px 22px;
+    font-size: 15px; font-weight: 700;
+    border: none; border-radius: 12px;
     background: linear-gradient(180deg, #81c784, #4caf50);
-    border: none;
-    border-radius: 25px;
-    color: #003300;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
+    color: #003300; cursor: pointer;
   }
-  .scratch-btn.penalty-btn {
-    background: linear-gradient(180deg, #ef5350, #c62828);
-    color: white;
+  .shot-btn:active { transform: scale(0.95); }
+  .result-text {
+    margin-top: 18px; font-size: 18px; font-weight: 700;
+    min-height: 28px; text-align: center;
   }
 </style>
 </head>
@@ -319,7 +192,7 @@
   <div class="race-box">
     <div class="race-header">
       <span class="goals-label">⚽ GOALS (<span id="goalsCount">0</span>/7)</span>
-      <span class="fouls-label">FOULS (<span id="foulsCount">0</span>/7) 🔴</span>
+      <span class="fouls-label">FOULS (<span id="foulsCount">0</span>/7) 🔔</span>
     </div>
     <div class="race-track">
       <div class="track-side">
@@ -333,13 +206,13 @@
       </div>
       <div class="vs-divider">VS</div>
       <div class="track-side fouls-side">
-        <div class="race-slot" id="f6">🔴</div>
-        <div class="race-slot" id="f5">🔴</div>
-        <div class="race-slot" id="f4">🔴</div>
-        <div class="race-slot" id="f3">🔴</div>
-        <div class="race-slot" id="f2">🔴</div>
-        <div class="race-slot" id="f1">🔴</div>
-        <div class="race-slot" id="f0">🔴</div>
+        <div class="race-slot" id="f6">🔔</div>
+        <div class="race-slot" id="f5">🔔</div>
+        <div class="race-slot" id="f4">🔔</div>
+        <div class="race-slot" id="f3">🔔</div>
+        <div class="race-slot" id="f2">🔔</div>
+        <div class="race-slot" id="f1">🔔</div>
+        <div class="race-slot" id="f0">🔔</div>
       </div>
     </div>
   </div>
@@ -396,20 +269,25 @@
     <strong>Paytable</strong><br>
     ⚽ Football = 800 &nbsp;|&nbsp; 🏆 Trophy = 500<br>
     👟 Boots / 🧤 Gloves / 🥅 Goal = 250<br>
-    🏅 Medal = 150 &nbsp;|&nbsp; 🟡 Yellow = 80<br>
-    🔴 Red Card: 1=−40  2=−80  3=−150  4=−300  5=−800<br>
-    ⭐ Middle = Free Kicks &nbsp;|&nbsp; ⭐ Reel 4 = Bonus Scratch<br>
-    🔴 Reel 1 = Red Card Trap
+    🏅 Medal = 150 &nbsp;|&nbsp; 🚩 Corner = 80<br>
+    🔔 Whistle: 1=−40  2=−80  3=−150  4=−300  5=−800<br>
+    ⭐ Middle = Free Kicks &nbsp;|&nbsp; ⭐ / 🔔 = Penalty Kick
   </div>
 </div>
 
-<div id="scratchOverlay">
-  <div class="scratch-title" id="scratchTitle">✨ BONUS SCRATCH ✨</div>
-  <div class="scratch-card" id="scratchCard">
-    <div class="scratch-prize" id="scratchPrize">×5<small>MULTIPLIER!</small></div>
-    <div id="scratchCover">TAP TO SCRATCH</div>
+<!-- Penalty Kick Overlay -->
+<div id="penaltyOverlay">
+  <div class="penalty-title">⚽ PENALTY KICK!</div>
+  <div class="goal-area">
+    <div class="keeper" id="keeper">🧤</div>
+    <div class="ball" id="ball">⚽</div>
   </div>
-  <button class="scratch-btn" id="claimBtn" style="display:none;">CLAIM BONUS</button>
+  <div class="shot-buttons" id="shotButtons">
+    <button class="shot-btn" data-dir="left">LEFT</button>
+    <button class="shot-btn" data-dir="center">CENTRE</button>
+    <button class="shot-btn" data-dir="right">RIGHT</button>
+  </div>
+  <div class="result-text" id="penaltyResult"></div>
 </div>
 
 <script>
@@ -458,12 +336,12 @@ function playSound(type) {
   } catch(e) {}
 }
 
-const symbols = ['⚽','🏆','👟','🧤','🥅','🏅','🔴','🟡','⭐'];
+const symbols = ['⚽','🏆','👟','🧤','🥅','🏅','🔔','🚩','⭐'];
 const values = {
   '⚽': 800, '🏆': 500, '👟': 250, '🧤': 250,
-  '🥅': 250, '🏅': 150, '🟡': 80, '🔴': 0, '⭐': 0
+  '🥅': 250, '🏅': 150, '🚩': 80, '🔔': 0, '⭐': 0
 };
-const foulPenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
+const whistlePenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
 
 let reels = [];
 let held = [false,false,false,false,false];
@@ -478,8 +356,6 @@ let isSpinning = false;
 let inBonus = false;
 let freeSpinsLeft = 0;
 let bonusMultiplier = 1;
-let pendingMult = 1;
-let scratchType = 'bonus';
 
 const reelEls = [0,1,2,3,4].map(i => document.getElementById('r'+i));
 const holdBtns = [0,1,2,3,4].map(i => document.getElementById('h'+i));
@@ -489,12 +365,11 @@ const winEl = document.getElementById('winAmount');
 const msgEl = document.getElementById('message');
 const betEl = document.getElementById('betDisplay');
 const spinBtn = document.getElementById('spinBtn');
-const overlay = document.getElementById('scratchOverlay');
-const scratchTitle = document.getElementById('scratchTitle');
-const scratchCard = document.getElementById('scratchCard');
-const scratchCover = document.getElementById('scratchCover');
-const scratchPrize = document.getElementById('scratchPrize');
-const claimBtn = document.getElementById('claimBtn');
+const penaltyOverlay = document.getElementById('penaltyOverlay');
+const keeper = document.getElementById('keeper');
+const ball = document.getElementById('ball');
+const penaltyResult = document.getElementById('penaltyResult');
+const shotButtons = document.getElementById('shotButtons');
 
 creditsEl.textContent = credits;
 
@@ -560,10 +435,7 @@ document.getElementById('betPlus').onclick = () => {
   if (bet < 50 && !inBonus) { bet += 5; betEl.textContent = 'Bet: ' + bet; haptic('light'); }
 };
 
-spinBtn.onclick = () => {
-  haptic('medium');
-  spin();
-};
+spinBtn.onclick = () => { haptic('medium'); spin(); };
 
 function spin() {
   if (isSpinning) return;
@@ -611,20 +483,16 @@ function finishSpin() {
 
   isSpinning = false;
   held = [false,false,false,false,false];
-  holdBtns.forEach(b => {
-    b.classList.remove('held');
-    b.textContent = 'HOLD';
-  });
+  holdBtns.forEach(b => { b.classList.remove('held'); b.textContent = 'HOLD'; });
 
   // Race progress
   reels.forEach(idx => {
     if (symbols[idx] === '⚽' && goalsRace < 7) goalsRace++;
-    if (symbols[idx] === '🔴' && foulsRace < 7) foulsRace++;
+    if (symbols[idx] === '🔔' && foulsRace < 7) foulsRace++;
   });
   updateRace();
   save();
 
-  // Race finished?
   if (goalsRace >= 7) {
     const win = 1500 * (bet / 10);
     credits += win;
@@ -641,7 +509,7 @@ function finishSpin() {
     const loss = Math.min(800 * (bet / 10), credits);
     credits -= loss;
     creditsEl.textContent = credits;
-    msgEl.textContent = '🔴 FOULS WIN THE RACE! −' + loss + ' Coins';
+    msgEl.textContent = '🔔 FOULS WIN THE RACE! −' + loss + ' Coins';
     goalsRace = 0; foulsRace = 0;
     updateRace(); save();
     playSound('foul'); haptic('error');
@@ -649,20 +517,15 @@ function finishSpin() {
     return;
   }
 
-  // Special features
-  if (!inBonus) {
-    if (symbols[reels[0]] === '🔴') {
-      openScratch('penalty');
-      return;
-    }
-    if (symbols[reels[4]] === '⭐') {
-      openScratch('bonus');
-      return;
-    }
-    if (symbols[reels[2]] === '⭐') {
-      startFreeSpins();
-      return;
-    }
+  // Trigger Penalty Kick
+  if (!inBonus && (symbols[reels[0]] === '🔔' || symbols[reels[4]] === '⭐')) {
+    openPenalty();
+    return;
+  }
+
+  if (!inBonus && symbols[reels[2]] === '⭐') {
+    startFreeSpins();
+    return;
   }
 
   checkWin();
@@ -695,73 +558,78 @@ function afterSpin() {
   }
 }
 
-function openScratch(type) {
-  scratchType = type;
-  const mults = type === 'bonus' ? [2,3,5,8] : [1,2,3,4];
-  pendingMult = mults[Math.floor(Math.random() * mults.length)];
-
-  if (type === 'penalty') {
-    scratchTitle.textContent = '🔴 RED CARD TRAP';
-    scratchTitle.className = 'scratch-title penalty-title';
-    scratchCard.className = 'scratch-card penalty';
-    scratchPrize.className = 'scratch-prize penalty-text';
-    scratchPrize.innerHTML = '−' + (30 * pendingMult) + '<small>COINS</small>';
-    scratchCover.className = 'penalty-cover';
-    scratchCover.textContent = 'SCRATCH TO REVEAL';
-    claimBtn.className = 'scratch-btn penalty-btn';
-    claimBtn.textContent = 'ACCEPT';
-    playSound('foul');
-  } else {
-    scratchTitle.textContent = '✨ BONUS SCRATCH';
-    scratchTitle.className = 'scratch-title';
-    scratchCard.className = 'scratch-card';
-    scratchPrize.className = 'scratch-prize';
-    scratchPrize.innerHTML = '×' + pendingMult + '<small>MULTIPLIER</small>';
-    scratchCover.className = '';
-    scratchCover.textContent = 'TAP TO SCRATCH';
-    claimBtn.className = 'scratch-btn';
-    claimBtn.textContent = 'CLAIM';
-    playSound('win');
-  }
-
-  scratchCover.classList.remove('hidden');
-  claimBtn.style.display = 'none';
-  overlay.classList.add('show');
-  haptic(type === 'penalty' ? 'error' : 'success');
+function openPenalty() {
+  penaltyResult.textContent = '';
+  keeper.style.left = '50%';
+  keeper.style.transform = 'translateX(-50%)';
+  ball.style.left = '50%';
+  ball.style.bottom = '8px';
+  ball.style.transform = 'translateX(-50%)';
+  shotButtons.style.display = 'flex';
+  penaltyOverlay.classList.add('show');
+  haptic('medium');
 }
 
-scratchCover.onclick = () => {
-  scratchCover.classList.add('hidden');
-  claimBtn.style.display = 'block';
-  haptic('medium');
-};
+document.querySelectorAll('.shot-btn').forEach(btn => {
+  btn.onclick = () => {
+    const playerDir = btn.dataset.dir;
+    const dirs = ['left', 'center', 'right'];
+    const keeperDir = dirs[Math.floor(Math.random() * 3)];
 
-claimBtn.onclick = () => {
-  if (scratchType === 'penalty') {
-    const loss = Math.min(30 * pendingMult, credits);
-    credits -= loss;
-    msgEl.textContent = '🔴 Trap: −' + loss + ' Coins';
-  } else {
-    const base = Math.max(calculateWin(), 40);
-    const final = base * pendingMult;
-    credits += final;
-    winEl.textContent = final;
-    msgEl.textContent = '✨ Scratch ×' + pendingMult + ' → +' + final;
-  }
-  creditsEl.textContent = credits;
-  overlay.classList.remove('show');
-  save();
-  haptic('success');
-  afterSpin();
-};
+    // Move keeper
+    if (keeperDir === 'left') keeper.style.left = '18%';
+    else if (keeperDir === 'right') keeper.style.left = '82%';
+    else keeper.style.left = '50%';
+
+    // Move ball
+    if (playerDir === 'left') {
+      ball.style.left = '20%';
+      ball.style.bottom = '70px';
+    } else if (playerDir === 'right') {
+      ball.style.left = '80%';
+      ball.style.bottom = '70px';
+    } else {
+      ball.style.left = '50%';
+      ball.style.bottom = '90px';
+    }
+
+    shotButtons.style.display = 'none';
+
+    setTimeout(() => {
+      const scored = playerDir !== keeperDir;
+      if (scored) {
+        const win = Math.round((80 + Math.random() * 120) * (bet / 10));
+        credits += win;
+        winEl.textContent = win;
+        penaltyResult.textContent = '⚽ GOAL! +' + win + ' Coins';
+        penaltyResult.style.color = '#81c784';
+        playSound('win');
+        haptic('success');
+      } else {
+        const loss = Math.min(Math.round((40 + Math.random() * 60) * (bet / 10)), credits);
+        credits -= loss;
+        penaltyResult.textContent = '🧤 SAVED! −' + loss + ' Coins';
+        penaltyResult.style.color = '#ef5350';
+        playSound('foul');
+        haptic('error');
+      }
+      creditsEl.textContent = credits;
+      save();
+
+      setTimeout(() => {
+        penaltyOverlay.classList.remove('show');
+        afterSpin();
+      }, 1800);
+    }, 500);
+  };
+});
 
 function calculateWin() {
   const counts = {};
   reels.forEach(i => counts[symbols[i]] = (counts[symbols[i]] || 0) + 1);
-
   let win = 0;
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🔴') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🔔') {
       const mult = cnt === 5 ? 3 : cnt === 4 ? 2 : 1;
       win = Math.round(values[sym] * mult * (bet / 10));
       break;
@@ -794,17 +662,17 @@ function checkWin() {
   let win = 0;
   let msgs = [];
 
-  const fouls = counts['🔴'] || 0;
-  if (fouls > 0) {
-    let loss = (foulPenalty[fouls] || 0) * (bet / 10);
+  const whistles = counts['🔔'] || 0;
+  if (whistles > 0) {
+    let loss = (whistlePenalty[whistles] || 0) * (bet / 10);
     loss = Math.min(loss, credits);
     credits -= loss;
-    msgs.push('🔴 ' + fouls + ' Red Card −' + loss);
+    msgs.push('🔔 ' + whistles + ' Whistle −' + loss);
     playSound('foul');
   }
 
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🔴') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🔔') {
       const mult = (cnt === 5 ? 3 : cnt === 4 ? 2 : 1) * bonusMultiplier;
       win = Math.round(values[sym] * mult * (bet / 10));
       msgs.push(cnt + '× ' + sym + ' +' + win + (bonusMultiplier > 1 ? ' (×2)' : ''));
@@ -812,7 +680,7 @@ function checkWin() {
     }
   }
 
-  if (win === 0 && Object.values(counts).some(c => c >= 2) && fouls === 0) {
+  if (win === 0 && Object.values(counts).some(c => c >= 2) && whistles === 0) {
     win = Math.round(25 * bonusMultiplier * (bet / 10));
     msgs.push('Two matching +' + win);
   }
