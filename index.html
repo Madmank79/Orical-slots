@@ -192,7 +192,7 @@
   <div class="race-box">
     <div class="race-header">
       <span class="goals-label">⚽ GOALS (<span id="goalsCount">0</span>/7)</span>
-      <span class="fouls-label">FOULS (<span id="foulsCount">0</span>/7) 🔔</span>
+      <span class="fouls-label">FOULS (<span id="foulsCount">0</span>/7) 🖕</span>
     </div>
     <div class="race-track">
       <div class="track-side">
@@ -206,13 +206,13 @@
       </div>
       <div class="vs-divider">VS</div>
       <div class="track-side fouls-side">
-        <div class="race-slot" id="f6">🔔</div>
-        <div class="race-slot" id="f5">🔔</div>
-        <div class="race-slot" id="f4">🔔</div>
-        <div class="race-slot" id="f3">🔔</div>
-        <div class="race-slot" id="f2">🔔</div>
-        <div class="race-slot" id="f1">🔔</div>
-        <div class="race-slot" id="f0">🔔</div>
+        <div class="race-slot" id="f6">🖕</div>
+        <div class="race-slot" id="f5">🖕</div>
+        <div class="race-slot" id="f4">🖕</div>
+        <div class="race-slot" id="f3">🖕</div>
+        <div class="race-slot" id="f2">🖕</div>
+        <div class="race-slot" id="f1">🖕</div>
+        <div class="race-slot" id="f0">🖕</div>
       </div>
     </div>
   </div>
@@ -270,8 +270,8 @@
     ⚽ Football = 800 &nbsp;|&nbsp; 🏆 Trophy = 500<br>
     👟 Boots / 🧤 Gloves / 🥅 Goal = 250<br>
     🏅 Medal = 150 &nbsp;|&nbsp; 🚩 Corner = 80<br>
-    🔔 Whistle: 1=−40  2=−80  3=−150  4=−300  5=−800<br>
-    ⭐ Middle = Free Kicks &nbsp;|&nbsp; ⭐ / 🔔 = Penalty Kick
+    🖕 Penalty: 1=−40  2=−80  3=−150  4=−300  5=−800<br>
+    ⭐ Middle = Free Kicks &nbsp;|&nbsp; ⭐ / 🖕 = Penalty Kick
   </div>
 </div>
 
@@ -336,10 +336,10 @@ function playSound(type) {
   } catch(e) {}
 }
 
-const symbols = ['⚽','🏆','👟','🧤','🥅','🏅','🔔','🚩','⭐'];
+const symbols = ['⚽','🏆','👟','🧤','🥅','🏅','🖕','🚩','⭐'];
 const values = {
   '⚽': 800, '🏆': 500, '👟': 250, '🧤': 250,
-  '🥅': 250, '🏅': 150, '🚩': 80, '🔔': 0, '⭐': 0
+  '🥅': 250, '🏅': 150, '🚩': 80, '🖕': 0, '⭐': 0
 };
 const whistlePenalty = {1:40, 2:80, 3:150, 4:300, 5:800};
 
@@ -488,7 +488,7 @@ function finishSpin() {
   // Race progress
   reels.forEach(idx => {
     if (symbols[idx] === '⚽' && goalsRace < 7) goalsRace++;
-    if (symbols[idx] === '🔔' && foulsRace < 7) foulsRace++;
+    if (symbols[idx] === '🖕' && foulsRace < 7) foulsRace++;
   });
   updateRace();
   save();
@@ -509,7 +509,7 @@ function finishSpin() {
     const loss = Math.min(800 * (bet / 10), credits);
     credits -= loss;
     creditsEl.textContent = credits;
-    msgEl.textContent = '🔔 FOULS WIN THE RACE! −' + loss + ' Coins';
+    msgEl.textContent = '🖕 FOULS WIN THE RACE! −' + loss + ' Coins';
     goalsRace = 0; foulsRace = 0;
     updateRace(); save();
     playSound('foul'); haptic('error');
@@ -518,7 +518,7 @@ function finishSpin() {
   }
 
   // Trigger Penalty Kick
-  if (!inBonus && (symbols[reels[0]] === '🔔' || symbols[reels[4]] === '⭐')) {
+  if (!inBonus && (symbols[reels[0]] === '🖕' || symbols[reels[4]] === '⭐')) {
     openPenalty();
     return;
   }
@@ -629,7 +629,7 @@ function calculateWin() {
   reels.forEach(i => counts[symbols[i]] = (counts[symbols[i]] || 0) + 1);
   let win = 0;
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🔔') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🖕') {
       const mult = cnt === 5 ? 3 : cnt === 4 ? 2 : 1;
       win = Math.round(values[sym] * mult * (bet / 10));
       break;
@@ -662,17 +662,17 @@ function checkWin() {
   let win = 0;
   let msgs = [];
 
-  const whistles = counts['🔔'] || 0;
+  const whistles = counts['🖕'] || 0;
   if (whistles > 0) {
     let loss = (whistlePenalty[whistles] || 0) * (bet / 10);
     loss = Math.min(loss, credits);
     credits -= loss;
-    msgs.push('🔔 ' + whistles + ' Whistle −' + loss);
+    msgs.push('🖕 ' + whistles + ' Penalty −' + loss);
     playSound('foul');
   }
 
   for (const [sym, cnt] of Object.entries(counts)) {
-    if (cnt >= 3 && sym !== '⭐' && sym !== '🔔') {
+    if (cnt >= 3 && sym !== '⭐' && sym !== '🖕') {
       const mult = (cnt === 5 ? 3 : cnt === 4 ? 2 : 1) * bonusMultiplier;
       win = Math.round(values[sym] * mult * (bet / 10));
       msgs.push(cnt + '× ' + sym + ' +' + win + (bonusMultiplier > 1 ? ' (×2)' : ''));
